@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -42,7 +41,7 @@ class TodoServiceTest {
     @Test
     void should_return_todo_when_add_todo_given_todo() {
         //given
-        Todo todo = new Todo("1", "hhh",false);
+        Todo todo = new Todo("1", "hhh", false);
         given(mockedTodoRepository.save(todo)).willReturn(todo);
         //when
         Todo saveTodo = todoService.addTodo(TodoMapper.toTodoRequest(todo));
@@ -73,7 +72,7 @@ class TodoServiceTest {
     @Test
     void should_return_todo_when_update_todo_given_id_and_todo() {
         //given
-        Todo todo = new Todo("1", "hhhh",true);
+        Todo todo = new Todo("1", "hhhh", true);
         Todo updateTodo = new Todo("1", "sssss", false);
         given(mockedTodoRepository.findById(todo.getId())).willReturn(Optional.of(todo));
         given(mockedTodoRepository.save(updateTodo)).willReturn(updateTodo);
@@ -85,7 +84,7 @@ class TodoServiceTest {
     @Test
     void should_throw_no_such_data_exception_when_update_todo_given_id_and_todo() {
         //given
-        TodoRequest todoRequest = new TodoRequest("1", "hhhh" , true);
+        TodoRequest todoRequest = new TodoRequest("1", "hhhh", true);
         given(mockedTodoRepository.findById("1")).willReturn(Optional.ofNullable(null));
         //when
         //then

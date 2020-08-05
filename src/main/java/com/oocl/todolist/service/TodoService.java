@@ -1,9 +1,7 @@
 package com.oocl.todolist.service;
 
-import com.oocl.todolist.common.JsonResult;
 import com.oocl.todolist.dao.TodoRepository;
 import com.oocl.todolist.dto.TodoRequest;
-import com.oocl.todolist.dto.TodoResponse;
 import com.oocl.todolist.exception.IllegalOperationException;
 import com.oocl.todolist.exception.NoSuchDataException;
 import com.oocl.todolist.mapper.TodoMapper;

@@ -14,7 +14,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.junit.Assert.assertFalse;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -38,8 +37,8 @@ public class TodoIntegrationTest {
     void should_return_todo_list_when_get_all_todo_list_given_request() throws Exception {
         //given
         List<Todo> todos = new ArrayList<>();
-        todos.add(new Todo("1","hhhh",true));
-        todos.add(new Todo("2","ssss",false));
+        todos.add(new Todo("1", "hhhh", true));
+        todos.add(new Todo("2", "ssss", false));
         List<Todo> todoList = todoRepository.saveAll(todos);
         //then
         mockMvc.perform(get("/todos"))
@@ -70,7 +69,7 @@ public class TodoIntegrationTest {
     void should_return_todo_when_update_todo_given_todo() throws Exception {
         //given
         Todo todo = todoRepository.save(new Todo("1", "hhh", true));
-        Todo updateTodo = new Todo("1","sss",false);
+        Todo updateTodo = new Todo("1", "sss", false);
         String json = JSON.toJSONString(updateTodo);
         //when
         mockMvc.perform(put("/todos/" + updateTodo.getId())
@@ -85,7 +84,7 @@ public class TodoIntegrationTest {
     @Test
     void should_delete_todo_when_delete_todo_by_id_given_id() throws Exception {
         //given
-        Todo todo = todoRepository.save(new Todo("1","hhh",true));
+        Todo todo = todoRepository.save(new Todo("1", "hhh", true));
         //when
         mockMvc.perform(delete("/todos/" + todo.getId())).andExpect(status().isOk());
         //then
