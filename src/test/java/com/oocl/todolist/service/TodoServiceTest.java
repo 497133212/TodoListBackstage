@@ -1,6 +1,7 @@
 package com.oocl.todolist.service;
 
 import com.oocl.todolist.dao.TodoRepository;
+import com.oocl.todolist.mapper.TodoMapper;
 import com.oocl.todolist.model.Todo;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,5 +33,15 @@ class TodoServiceTest {
         assertEquals(todos, todoList);
     }
 
+    @Test
+    void should_return_todo_when_add_todo_given_todo() {
+        //given
+        Todo todo = new Todo("1", "hhh",false);
+        given(mockedTodoRepository.save(todo)).willReturn(todo);
+        //when
+        Todo savaTodo = todoService.addTodo(todo);
+        //then
+        assertEquals(todo, savaTodo);
 
+    }
 }

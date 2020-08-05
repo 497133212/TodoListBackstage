@@ -2,6 +2,7 @@ package com.oocl.todolist.controller;
 
 import com.oocl.todolist.common.JsonResult;
 import com.oocl.todolist.dto.TodoResponse;
+import com.oocl.todolist.mapper.TodoMapper;
 import com.oocl.todolist.model.Todo;
 import com.oocl.todolist.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,11 @@ import static com.oocl.todolist.common.JsonResult.success;
 @RequestMapping("/todos")
 public class TodoController {
 
-    @Autowired
     TodoService todoService;
+
+    public TodoController(TodoService todoService) {
+        this.todoService = todoService;
+    }
 
 
     @GetMapping
@@ -30,13 +34,13 @@ public class TodoController {
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public TodoResponse updateTodo(@PathVariable String id) {
-        return todoService.updateTodo(id);
+        return TodoMapper.toTodoResponse(todoService.updateTodo(id));
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public TodoResponse addTodo(@RequestBody Todo todo) {
-        return todoService.addTodo(todo);
+        return TodoMapper.toTodoResponse(todoService.addTodo(todo));
     }
 
     @DeleteMapping("/{id}")

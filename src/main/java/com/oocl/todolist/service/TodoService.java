@@ -21,11 +21,11 @@ public class TodoService {
         return todoRepository.findAll();
     }
 
-    public TodoResponse updateTodo(String id) {
+    public Todo updateTodo(String id) {
         return null;
     }
 
-    public TodoResponse addTodo(Todo todo) {
+    public Todo addTodo(Todo todo) {
         return null;
     }
 
