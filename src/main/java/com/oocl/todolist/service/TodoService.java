@@ -11,12 +11,14 @@ import java.util.List;
 @Service
 public class TodoService {
 
-    public TodoService(TodoRepository todoRepository) {
+    private TodoRepository todoRepository;
 
+    public TodoService(TodoRepository todoRepository) {
+        this.todoRepository = todoRepository;
     }
 
     public List<Todo> getAllTodo() {
-        return null;
+        return todoRepository.findAll();
     }
 
     public TodoResponse updateTodo(String id) {
