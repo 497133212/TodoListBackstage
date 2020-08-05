@@ -8,11 +8,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 
 @SpringBootTest
@@ -54,4 +57,28 @@ class TodoServiceTest {
         //then
         assertNull(todo);
     }
+
+    @Test
+    void should_delete_todo_when_delete_todo_by_id_given_id() {
+        //given
+        //when
+        String id = "1";
+        todoService.deleteTodo(id);
+        //then
+        verify(mockedTodoRepository).deleteById(id);
+    }
+
+    @Test
+    void should_return_todo_when_update_todo_given_id_and_todo() {
+        //given
+        Todo todo = new Todo("1", "hhhh",true);
+        Todo updateTodo = new Todo("1", "sssss", false);
+        given(mockedTodoRepository.findById(todo.getId())).willReturn(Optional.of(todo));
+        given(mockedTodoRepository.save(updateTodo)).willReturn(updateTodo);
+        //when
+        Todo actual = todoService.updateTodo("1", TodoMapper.toTodoRequest(updateTodo));
+        assertEquals(updateTodo, actual);
+    }
+
+
 }
