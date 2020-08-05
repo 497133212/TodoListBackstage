@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
@@ -39,9 +40,18 @@ class TodoServiceTest {
         Todo todo = new Todo("1", "hhh",false);
         given(mockedTodoRepository.save(todo)).willReturn(todo);
         //when
-        Todo savaTodo = todoService.addTodo(todo);
+        Todo saveTodo = todoService.addTodo(TodoMapper.toTodoRequest(todo));
         //then
-        assertEquals(todo, savaTodo);
+        assertEquals(todo, saveTodo);
+    }
 
+    @Test
+    void should_return_null_when_add_todo_given_null() {
+        //given
+        given(mockedTodoRepository.save(null)).willReturn(null);
+        //when
+        Todo todo = todoService.addTodo(null);
+        //then
+        assertNull(todo);
     }
 }
