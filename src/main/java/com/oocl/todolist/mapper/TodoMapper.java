@@ -18,4 +18,10 @@ public class TodoMapper {
         BeanUtils.copyProperties(todo, todoResponse);
         return todoResponse;
     }
+
+    public static TodoRequest toTodoRequest(Todo todo) {
+        TodoRequest todoRequest = new TodoRequest();
+        BeanUtils.copyProperties(todo, todoRequest);
+        return todoRequest;
+    }
 }

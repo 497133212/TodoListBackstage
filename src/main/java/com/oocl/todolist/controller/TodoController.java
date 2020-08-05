@@ -1,6 +1,7 @@
 package com.oocl.todolist.controller;
 
 import com.oocl.todolist.common.JsonResult;
+import com.oocl.todolist.dto.TodoRequest;
 import com.oocl.todolist.dto.TodoResponse;
 import com.oocl.todolist.mapper.TodoMapper;
 import com.oocl.todolist.model.Todo;
@@ -33,14 +34,14 @@ public class TodoController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public TodoResponse updateTodo(@PathVariable String id) {
-        return TodoMapper.toTodoResponse(todoService.updateTodo(id));
+    public TodoResponse updateTodo(@PathVariable String id, @RequestBody TodoRequest todoRequest) {
+        return TodoMapper.toTodoResponse(todoService.updateTodo(id, todoRequest));
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public TodoResponse addTodo(@RequestBody Todo todo) {
-        return TodoMapper.toTodoResponse(todoService.addTodo(todo));
+    public TodoResponse addTodo(@RequestBody TodoRequest todoRequest) {
+        return TodoMapper.toTodoResponse(todoService.addTodo(todoRequest));
     }
 
     @DeleteMapping("/{id}")
