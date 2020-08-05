@@ -1,6 +1,9 @@
 package com.oocl.todolist.service;
 
 import com.oocl.todolist.dao.TodoRepository;
+import com.oocl.todolist.dto.TodoRequest;
+import com.oocl.todolist.exception.IllegalOperationException;
+import com.oocl.todolist.exception.NoSuchDataException;
 import com.oocl.todolist.mapper.TodoMapper;
 import com.oocl.todolist.model.Todo;
 import org.junit.jupiter.api.Test;
@@ -10,8 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
@@ -78,6 +80,25 @@ class TodoServiceTest {
         //when
         Todo actual = todoService.updateTodo("1", TodoMapper.toTodoRequest(updateTodo));
         assertEquals(updateTodo, actual);
+    }
+
+    @Test
+    void should_throw_no_such_data_exception_when_update_todo_given_id_and_todo() {
+        //given
+        TodoRequest todoRequest = new TodoRequest("1", "hhhh" , true);
+        given(mockedTodoRepository.findById("1")).willReturn(Optional.ofNullable(null));
+        //when
+        //then
+        assertThrows(NoSuchDataException.class, () -> todoService.updateTodo("1", todoRequest));
+    }
+
+    @Test
+    void should_throw_illegal_exception_update_company_given_company_Id_and_company_no_equal() {
+        //given
+        Todo todo = new Todo("1", "hhhh", false);
+        TodoRequest updateTodo = new TodoRequest("2", "hhhh", false);
+        //when
+        assertThrows(IllegalOperationException.class, () -> todoService.updateTodo("1", updateTodo));
     }
 
 

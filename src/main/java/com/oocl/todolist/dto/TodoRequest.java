@@ -5,6 +5,15 @@ public class TodoRequest {
     private String content;
     private boolean status;
 
+    public TodoRequest(String id, String content, boolean status) {
+        this.id = id;
+        this.content = content;
+        this.status = status;
+    }
+
+    public TodoRequest() {
+    }
+
     public String getId() {
         return id;
     }
