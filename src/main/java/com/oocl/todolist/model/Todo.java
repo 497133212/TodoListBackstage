@@ -1,11 +1,14 @@
 package com.oocl.todolist.model;
 
+import org.hibernate.annotations.GeneratorType;
+
 import javax.persistence.*;
 
 
 @Entity
 public class Todo {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
     private String content;
     private boolean status;

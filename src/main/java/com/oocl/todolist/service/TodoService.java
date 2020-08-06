@@ -17,8 +17,10 @@ import java.util.Objects;
 public class TodoService {
 
     private TodoRepository todoRepository;
+    private TodoMapper todoMapper;
 
-    public TodoService(TodoRepository todoRepository) {
+    public TodoService(TodoRepository todoRepository, TodoMapper todoMapper) {
+        this.todoMapper = todoMapper;
         this.todoRepository = todoRepository;
     }
 
@@ -30,15 +32,14 @@ public class TodoService {
         if(!id.equals(todoRequest.getId())) {
             throw new IllegalOperationException();
         }
-        Todo todo = TodoMapper.toTodo(todoRequest);
         Todo updateTodo = todoRepository.findById(id).orElseThrow(NoSuchDataException::new);
-        BeanUtils.copyProperties(todo, updateTodo);
+        updateTodo.setStatus(!updateTodo.isStatus());
         return todoRepository.save(updateTodo);
     }
 
     public Todo addTodo(TodoRequest todoRequest) {
         if(Objects.nonNull(todoRequest)) {
-            return todoRepository.save(TodoMapper.toTodo(todoRequest));
+            return todoRepository.save(todoMapper.toTodo(todoRequest));
         }
         return null;
     }

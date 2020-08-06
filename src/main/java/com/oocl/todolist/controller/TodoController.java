@@ -18,7 +18,10 @@ import static com.oocl.todolist.common.JsonResult.success;
 @RequestMapping("/todos")
 public class TodoController {
 
+    @Autowired
     TodoService todoService;
+    @Autowired
+    TodoMapper todoMapper;
 
     public TodoController(TodoService todoService) {
         this.todoService = todoService;
@@ -35,13 +38,13 @@ public class TodoController {
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public TodoResponse updateTodo(@PathVariable String id, @RequestBody TodoRequest todoRequest) {
-        return TodoMapper.toTodoResponse(todoService.updateTodo(id, todoRequest));
+        return todoMapper.toTodoResponse(todoService.updateTodo(id, todoRequest));
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public TodoResponse addTodo(@RequestBody TodoRequest todoRequest) {
-        return TodoMapper.toTodoResponse(todoService.addTodo(todoRequest));
+        return todoMapper.toTodoResponse(todoService.addTodo(todoRequest));
     }
 
     @DeleteMapping("/{id}")
