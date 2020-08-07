@@ -6,12 +6,12 @@ import com.oocl.todolist.exception.IllegalOperationException;
 import com.oocl.todolist.exception.NoSuchDataException;
 import com.oocl.todolist.mapper.TodoMapper;
 import com.oocl.todolist.model.Todo;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class TodoService {
@@ -45,8 +45,10 @@ public class TodoService {
     }
 
     public void deleteTodo(String id) {
-        if(!StringUtils.isEmpty(id)) {
-            todoRepository.deleteById(id);
+        Todo todo = todoRepository.findById(id).orElse(null);
+        if(Objects.isNull(todo)) {
+            throw new NoSuchDataException();
         }
+        todoRepository.deleteById(id);
     }
 }
